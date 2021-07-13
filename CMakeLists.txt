@@ -14,7 +14,7 @@ set(MYLIB_VERSION_MINOR 0)
 set(MYLIB_VERSION_PATCH 0)
 set(MYLIB_VERSION_STRING ${MYLIB_VERSION_MAJOR}.${MYLIB_VERSION_MINOR}.${MYLIB_VERSION_PATCH})
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules/)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
 
 # finds the current version of libgphoto2 installed
 find_package( Gphoto2 REQUIRED )
@@ -61,9 +61,9 @@ set(GPHOTO2PP_SOURCES ${GPHOTO2PP_SOURCE_FILES})
 set(GPHOTO2PP_HEADERS ${GPHOTO2PP_HPPHEADER_FILES} ${GPHOTO2PP_HEADER_FILES})
 
 add_library( gphoto2pp SHARED ${GPHOTO2PP_SOURCES})
-target_link_libraries(gphoto2pp pthread)
+target_link_libraries(gphoto2pp pthread ${Gphoto2_LIBRARIES})
 
-include_directories("include")
+target_include_directories(gphoto2pp PUBLIC "./include")
 
 # sets the shared library version
 # http://cmake.3232098.n2.nabble.com/Version-in-name-of-shared-library-td7581530.html
