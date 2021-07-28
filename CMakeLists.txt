@@ -1,5 +1,5 @@
-cmake_minimum_required (VERSION 2.8.3)
-project (GPHOTO2PP DESCRIPTION "A C++ wrapper for libgphoto2")
+cmake_minimum_required (VERSION 3.19.3)
+project (GPHOTO2PP VERSION 1.0.0 DESCRIPTION "A C++ wrapper for libgphoto2" LANGUAGES CXX)
 
 if(CMAKE_BUILD_TYPE)
     message("Building ${CMAKE_BUILD_TYPE} build.")
@@ -7,17 +7,10 @@ elseif(NOT CMAKE_BUILD_TYPE)
     message(FATAL_ERROR "No build type specified. Use -DCMAKE_BUILD_TYPE=[DEBUG|RELEASE] to specify.")
 endif(CMAKE_BUILD_TYPE)
 
-#set the version of our library
-# MAJOR, is significant breaking changes, MINOR, is when we might have changed signatures of existing functions, PATCH, is just bug fixes and no breaking changes
-set(MYLIB_VERSION_MAJOR 1)
-set(MYLIB_VERSION_MINOR 0)
-set(MYLIB_VERSION_PATCH 0)
-set(MYLIB_VERSION_STRING ${MYLIB_VERSION_MAJOR}.${MYLIB_VERSION_MINOR}.${MYLIB_VERSION_PATCH})
-
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
 
 # finds the current version of libgphoto2 installed
-find_package( Gphoto2 REQUIRED )
+find_package(GPHOTO2 REQUIRED)
 if(GPHOTO2_FOUND)
 	include_directories(${Gphoto2_INCLUDE_DIRS})
 	list(APPEND LIBS ${Gphoto2_LIBRARIES})
@@ -67,7 +60,7 @@ target_include_directories(gphoto2pp PUBLIC "./include")
 
 # sets the shared library version
 # http://cmake.3232098.n2.nabble.com/Version-in-name-of-shared-library-td7581530.html
-set_target_properties( gphoto2pp PROPERTIES VERSION ${MYLIB_VERSION_STRING} SOVERSION ${MYLIB_VERSION_MAJOR} )
+set_target_properties(gphoto2pp PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
 
 # create pkg-config files for configuration in non-cmake projects
 configure_file(gphoto2pp.pc.in gphoto2pp.pc @ONLY)
