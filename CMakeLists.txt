@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.19.3)
+cmake_minimum_required (VERSION 3.13.4)
 project (GPHOTO2PP VERSION 1.0.0 DESCRIPTION "A C++ wrapper for libgphoto2" LANGUAGES CXX)
 
 if(CMAKE_BUILD_TYPE)
